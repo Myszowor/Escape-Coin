@@ -1,7 +1,6 @@
 package object;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 
 public class OBJ_Coin extends SuperObject {
