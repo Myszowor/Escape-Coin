@@ -41,18 +41,18 @@ public class Player extends Entity {
     }
     public void getPlayerImage(){
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("../res/player/up1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("../res/player/up2.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("../res/player/up3.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("../res/player/down1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("../res/player/down2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("../res/player/down3.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("../res/player/left1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("../res/player/left2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("../res/player/left3.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("../res/player/right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("../res/player/right2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("../res/player/right3.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("../res/player/up1-Photoroom.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("../res/player/up2-Photoroom.png"));
+            up3 = ImageIO.read(getClass().getResourceAsStream("../res/player/up3-Photoroom.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("../res/player/down1-Photoroom.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("../res/player/down2-Photoroom.png"));
+            down3 = ImageIO.read(getClass().getResourceAsStream("../res/player/down3-Photoroom.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("../res/player/left1-Photoroom.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("../res/player/left2-Photoroom.png"));
+            left3 = ImageIO.read(getClass().getResourceAsStream("../res/player/left3-Photoroom.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("../res/player/right1-Photoroom.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("../res/player/right2-Photoroom.png"));
+            right3 = ImageIO.read(getClass().getResourceAsStream("../res/player/right3-Photoroom.png"));
 
         }catch(IOException e){
             e.printStackTrace();
