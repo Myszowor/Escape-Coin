@@ -17,6 +17,8 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    int hasCoin = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -27,6 +29,8 @@ public class Player extends Entity {
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
 
@@ -76,9 +80,13 @@ public class Player extends Entity {
                 direction = "right";
             }
 
-            //sprawdzanie kolizji
+            //sprawdzanie kolizji struktur mapy
             collisionOn = false;
             gp.colChecker.checkTile(this);
+
+            //sprawdzanie kolizji obiektów
+            int objIndex = gp.colChecker.checkObject(this, true);
+            pickUpObject(objIndex);
 
             if(collisionOn == false){
                 switch(direction){
@@ -112,6 +120,25 @@ public class Player extends Entity {
             }
         }
     }
+    public void pickUpObject(int i){
+        if(i != 99){
+            String objectName = gp.obj[i].name;
+            switch(objectName){
+                case "Coin":
+                    hasCoin++;
+                    gp.obj[i] = null;
+                    gp.playSE(1);
+                    break;
+                case "Door":
+                    if(hasCoin>0){
+                        gp.obj[i] = null;
+                        hasCoin--;
+                    }
+                    break;
+            }
+        }
+    }
+
     public void draw(Graphics2D g2d){
         BufferedImage image = null;
 
