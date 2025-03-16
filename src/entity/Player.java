@@ -17,7 +17,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    int hasCoin = 0;
+    public int hasCoin = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -128,11 +128,18 @@ public class Player extends Entity {
                     hasCoin++;
                     gp.obj[i] = null;
                     gp.playSE(1);
+                    gp.ui.showMessage("Zdobyłeś monetę!");
                     break;
                 case "Door":
                     if(hasCoin>0){
                         gp.obj[i] = null;
                         hasCoin--;
+                        gp.ui.showMessage("Otworzyłeś drzwi tracąc 1 monetę!");
+                        gp.ui.gameFinished = true;
+                        gp.stopMusic();
+                    }
+                    else{
+                        gp.ui.showMessage("Nie posiadasz monety, której możesz użyć do otwarcia drzwi!");
                     }
                     break;
             }
