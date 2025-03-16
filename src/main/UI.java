@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 public class UI {
 
     GamePanel gp;
+    Graphics2D g2d;
     Font arial_30;
     BufferedImage coinImage;
     public boolean messageOn = false;
@@ -29,44 +30,66 @@ public class UI {
     }
 
     public void draw(Graphics2D g2d) {
+        this.g2d = g2d;
 
-        if(gameFinished == true){
-            g2d.setFont(arial_30);
-            g2d.setColor(Color.YELLOW);
-            g2d.setFont(g2d.getFont().deriveFont(50F));
+        g2d.setFont(arial_30);
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(50F));
 
-            String text;
-            int textLength;
-            int x;
-            int y;
+        if(gp.gameState == gp.playState){
+            if(gameFinished == true){
 
-            text = "KONIEC GRY!";
-            textLength = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+                String text;
+                int textLength;
+                int x;
+                int y;
 
-            x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 - (gp.tileSize * 2);
-            g2d.drawString(text, x, y);
+                text = "KONIEC GRY!";
+                textLength = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
 
-            gp.gameThread = null;
-        }
-        else{
-            g2d.setFont(arial_30);
-            g2d.setColor(Color.WHITE);
-            g2d.drawImage(coinImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2d.drawString("x " + gp.player.hasCoin, 70, 60);
+                x = gp.screenWidth/2 - textLength/2;
+                y = gp.screenHeight/2 - (gp.tileSize * 2);
+                g2d.drawString(text, x, y);
 
-            //wiadomość
-            if(messageOn == true){
+                gp.gameThread = null;
+            }
+            else{
+                g2d.setFont(arial_30);
+                g2d.setColor(Color.WHITE);
+                g2d.drawImage(coinImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+                g2d.drawString("x " + gp.player.hasCoin, 70, 60);
 
-                g2d.setFont(g2d.getFont().deriveFont(25F));
-                g2d.drawString(message, 70, 100);
+                //wiadomość
+                if(messageOn == true){
 
-                messageCounter++;
-                if(messageCounter > 90){
-                    messageCounter = 0;
-                    messageOn = false;
+                    g2d.setFont(g2d.getFont().deriveFont(25F));
+                    g2d.drawString(message, 70, 100);
+
+                    messageCounter++;
+                    if(messageCounter > 90){
+                        messageCounter = 0;
+                        messageOn = false;
+                    }
                 }
             }
         }
+
+        if(gp.gameState == gp.pauseState){
+            drawPauseScreen();
+        }
+    }
+    public void drawPauseScreen(){
+        g2d.setFont(g2d.getFont().deriveFont(60f));
+        String text = "WSTRZYMANO GRĘ";
+        int x = getXforCenterText(text);
+        int y = gp.screenHeight / 2;
+
+        g2d.drawString(text, x ,y);
+    }
+
+    public int getXforCenterText(String text){
+        int length = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        int x = gp.screenWidth/2 - length/2;
+        return x;
     }
 }
