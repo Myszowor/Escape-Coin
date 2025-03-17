@@ -3,6 +3,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -38,31 +39,41 @@ public class Player extends Entity {
         getPlayerImage();
     }
     public void setDefaultValues(){
-        worldX = 50 * gp.tileSize;
-        worldY = 31 * gp.tileSize;
+        worldX = 10 * gp.tileSize;
+        worldY = 10 * gp.tileSize;
         speed = 3;
         direction = "down";
+
+        maxLife = 4;
+        life = maxLife;
     }
     public void getPlayerImage(){
-        try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("../res/player/up1-Photoroom.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("../res/player/up2-Photoroom.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("../res/player/up3-Photoroom.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("../res/player/down1-Photoroom.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("../res/player/down2-Photoroom.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("../res/player/down3-Photoroom.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("../res/player/left1-Photoroom.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("../res/player/left2-Photoroom.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("../res/player/left3-Photoroom.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("../res/player/right1-Photoroom.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("../res/player/right2-Photoroom.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("../res/player/right3-Photoroom.png"));
+        up1 = setup("up1-Photoroom");
+        up2 = setup("up2-Photoroom");
+        up3 = setup("up3-Photoroom");
+        down1 = setup("down1-Photoroom");
+        down2 = setup("down2-Photoroom");
+        down3 = setup("down3-Photoroom");
+        left1 = setup("left1-Photoroom");
+        left2 = setup("left2-Photoroom");
+        left3 = setup("left3-Photoroom");
+        right1 = setup("right1-Photoroom");
+        right2 = setup("right2-Photoroom");
+        right3 = setup("right3-Photoroom");
+    }
 
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try{
+            image = ImageIO.read(getClass().getResourceAsStream("../res/player/" + imageName + ".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
         }
+        return image;
     }
-
 
     public void update(){
         if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true){

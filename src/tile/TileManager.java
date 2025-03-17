@@ -1,6 +1,7 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,33 +23,32 @@ public class TileManager {
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("../res/maps/map1.txt");
+        loadMap("../res/maps/map.txt");
     }
 
     public void getTileImage() {
+        setup(0, "grass1", false);
+        setup(1, "grass2", false);
+        setup(2, "dirt1", false);
+        setup(3, "dirt2", false);
+        setup(4, "stone1", false);
+        setup(5, "stone2", false);
+    }
+
+    public void setup(int index, String imagePath, boolean collision) {
+        UtilityTool uTool = new UtilityTool();
+
         try{
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass1.png"));
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/" + imagePath + ".png"));
+            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
 
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass2.png"));
-
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/dirt1.png"));
-
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/dirt2.png"));
-
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/stone1.png"));
-
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/res/tiles/stone2.png"));
-            tile[5].collision = true;
-        }catch(IOException e) {
+        }catch(IOException e){
             e.printStackTrace();
         }
     }
+
     public void loadMap(String filePath) {
         try{
             InputStream is = getClass().getResourceAsStream(filePath);
