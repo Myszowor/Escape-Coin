@@ -4,6 +4,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import object.OBJ_Fireball;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -48,6 +49,8 @@ public class Player extends Entity {
 
         maxLife = 4;
         life = maxLife;
+
+        projectile = new OBJ_Fireball(gp);
     }
     public void getPlayerImage(){
         up1 = setup("player/up1-Photoroom");
@@ -137,6 +140,13 @@ public class Player extends Entity {
             }
         }
 
+        if(keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30){
+
+            projectile.set(worldX, worldY, direction, true);
+
+            gp.projectileList.add(projectile);
+        }
+
         if(invincible == true){
             invincibleCounter++;
             if(invincibleCounter > 60){
@@ -144,13 +154,38 @@ public class Player extends Entity {
                 invincibleCounter = 0;
             }
         }
+        if(shotAvailableCounter < 30){
+            shotAvailableCounter++;
+        }
     }
 
     public void contactMonster(int i){
         if(i != 99){
-            if(invincible == false){
-                life -= 1;
+            if(invincible == false && gp.monster[i].dying == false){
+                int damage = gp.monster[i].attack;
+                if(damage < 0){
+                    damage = 0;
+                }
+                life -= damage;
                 invincible = true;
+            }
+        }
+    }
+
+    public void damageMonster(int i, int attack){
+        if(i != 999){
+            if(gp.monster[i].invincible == false){
+                int damage = attack - gp.monster[i].defense;
+                if(damage < 0){
+                    damage = 0;
+                }
+
+                gp.monster[i].life -= damage;
+                gp.monster[i].invincible = true;
+
+                if(gp.monster[i].life <= 0){
+                    gp.monster[i].dying = true;
+                }
             }
         }
     }

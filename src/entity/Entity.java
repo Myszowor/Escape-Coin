@@ -16,18 +16,27 @@ public class Entity {
 
     public BufferedImage up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
     public String direction = "down";
+    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
     public int spriteCounter = 0;
     public int spriteNumber = 1;
 
-    public Rectangle solidArea;
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int type; // 0 = player, 1 = monster
+    public int attack;
+    public int defense;
     public int actionLockCounter = 0;
+    public int shotAvailableCounter = 0;
     public String name;
     public boolean invincible = false;
+    public boolean alive = true;
+    public boolean dying = false;
+    public Projectile projectile;
+
     public int invincibleCounter = 0;
+    public int dyingCounter = 0;
 
     public int maxLife;
     public int life;
@@ -87,6 +96,14 @@ public class Entity {
                 spriteNumber = 1;
             }
             spriteCounter = 0;
+        }
+
+        if(invincible == true){
+            invincibleCounter++;
+            if(invincibleCounter > 40){
+                invincible = false;
+                invincibleCounter = 0;
+            }
         }
     }
 
@@ -169,8 +186,43 @@ public class Entity {
             if (image == null) {
                 image = down1;
             }
+            if(invincible == true){
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+            }
+
+            if(dying == true){
+                dyingAnimation(g2d);
+            }
 
             g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
+    }
+
+    public void dyingAnimation(Graphics2D g2d){
+        dyingCounter++;
+        if(dyingCounter <= 5){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+        }
+        if(dyingCounter > 5 && dyingCounter <= 10){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
+        if(dyingCounter > 10 && dyingCounter <= 15){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+        }
+        if(dyingCounter > 15 && dyingCounter <= 20){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
+        if(dyingCounter > 20 && dyingCounter <= 25){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+        }
+        if(dyingCounter > 25 && dyingCounter <= 30){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
+        if(dyingCounter > 40) {
+            dying = false;
+            alive = false;
         }
     }
 }

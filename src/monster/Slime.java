@@ -14,6 +14,8 @@ public class Slime extends Entity {
         speed = 1;
         maxLife = 2;
         life = maxLife;
+        attack = 1;
+        defense = 1;
 
         solidArea.x = 2;
         solidArea.y = 16;
