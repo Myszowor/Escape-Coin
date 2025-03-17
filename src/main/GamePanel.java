@@ -160,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //Pusta lista podmiotów
             for(int i = 0; i < entityList.size(); i++){
-                entityList.remove(i);
+                entityList.clear();
             }
 
             ui.draw(g2d);
