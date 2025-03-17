@@ -21,6 +21,8 @@ public class Player extends Entity {
     public int hasCoin = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
+
         this.gp = gp;
         this.keyH = keyH;
 
@@ -48,18 +50,18 @@ public class Player extends Entity {
         life = maxLife;
     }
     public void getPlayerImage(){
-        up1 = setup("up1-Photoroom");
-        up2 = setup("up2-Photoroom");
-        up3 = setup("up3-Photoroom");
-        down1 = setup("down1-Photoroom");
-        down2 = setup("down2-Photoroom");
-        down3 = setup("down3-Photoroom");
-        left1 = setup("left1-Photoroom");
-        left2 = setup("left2-Photoroom");
-        left3 = setup("left3-Photoroom");
-        right1 = setup("right1-Photoroom");
-        right2 = setup("right2-Photoroom");
-        right3 = setup("right3-Photoroom");
+        up1 = setup("player/up1-Photoroom");
+        up2 = setup("player/up2-Photoroom");
+        up3 = setup("player/up3-Photoroom");
+        down1 = setup("player/down1-Photoroom");
+        down2 = setup("player/down2-Photoroom");
+        down3 = setup("player/down3-Photoroom");
+        left1 = setup("player/left1-Photoroom");
+        left2 = setup("player/left2-Photoroom");
+        left3 = setup("player/left3-Photoroom");
+        right1 = setup("player/right1-Photoroom");
+        right2 = setup("player/right2-Photoroom");
+        right3 = setup("player/right3-Photoroom");
     }
 
     public BufferedImage setup(String imageName){
@@ -67,7 +69,7 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("../res/player/" + imageName + ".png"));
+            image = ImageIO.read(getClass().getResourceAsStream("../res/" + imageName + ".png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch(IOException e){
             e.printStackTrace();
@@ -98,6 +100,10 @@ public class Player extends Entity {
             //sprawdzanie kolizji obiektów
             int objIndex = gp.colChecker.checkObject(this, true);
             pickUpObject(objIndex);
+
+            //kolizja potworów
+            int monsterIndex = gp.colChecker.checkEntity(this, gp.monster);
+            contactMonster(monsterIndex);
 
             if(collisionOn == false){
                 switch(direction){
@@ -130,7 +136,25 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
+
+        if(invincible == true){
+            invincibleCounter++;
+            if(invincibleCounter > 60){
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
+
+    public void contactMonster(int i){
+        if(i != 99){
+            if(invincible == false){
+                life -= 1;
+                invincible = true;
+            }
+        }
+    }
+
     public void pickUpObject(int i){
         if(i != 99){
             String objectName = gp.obj[i].name;
@@ -206,6 +230,13 @@ public class Player extends Entity {
                 }
                 break;
         }
+
+        if(invincible == true){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+        }
+
         g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 }

@@ -30,9 +30,9 @@ public class TileManager {
         setup(0, "grass1", false);
         setup(1, "grass2", false);
         setup(2, "dirt1", false);
-        setup(3, "dirt2", false);
+        setup(3, "dirt2", true);
         setup(4, "stone1", false);
-        setup(5, "stone2", false);
+        setup(5, "stone2", true);
     }
 
     public void setup(int index, String imagePath, boolean collision) {

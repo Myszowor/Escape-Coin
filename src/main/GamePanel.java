@@ -1,11 +1,14 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable {
     //ustawienia ekranu
@@ -19,8 +22,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = maxScreenRow * tileSize; //768px
 
     //świat
-    public final int maxWorldCol = 20;
-    public final int maxWorldRow = 20;
+    public final int maxWorldCol = 18;
+    public final int maxWorldRow = 14;
 
     //FPS
     int FPS = 60;
@@ -36,7 +39,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Postacie i obiekty
     public Player player = new Player(this, keyH);
-    public SuperObject obj[] = new SuperObject[5];
+    public Entity obj[] = new Entity[5];
+    public Entity monster[] = new Entity[10];
+    ArrayList<Entity> entityList = new ArrayList<>();
 
     //Stany gry
     public int gameState;
@@ -55,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame(){
         aManager.setObject();
+        aManager.setMonster();
 
         playMusic(0);
         stopMusic();
@@ -98,6 +104,12 @@ public class GamePanel extends JPanel implements Runnable {
     public void update(){
         if(gameState == playState){
             player.update();
+
+            for(int i = 0; i < monster.length; i++) {
+                if(monster[i] != null){
+                    monster[i].update();
+                }
+            }
         }
 
         if(gameState == pauseState){
@@ -117,13 +129,39 @@ public class GamePanel extends JPanel implements Runnable {
         else{
             tileM.draw(g2d);
 
+            entityList.add(player);
+
             for(int i = 0; i < obj.length; i++){
                 if(obj[i] != null){
-                    obj[i].draw(g2d, this);
+                    entityList.add(obj[i]);
                 }
             }
 
-            player.draw(g2d);
+            for(int i = 0; i < monster.length; i++){
+                if(monster[i] != null){
+                    entityList.add(monster[i]);
+                }
+            }
+
+            //Sortowanie
+            Collections.sort(entityList, new Comparator<Entity>() {
+
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    return result;
+                }
+            });
+
+            //Rysowanie podmiotów
+            for(int i = 0; i < entityList.size(); i++){
+                entityList.get(i).draw(g2d);
+            }
+
+            //Pusta lista podmiotów
+            for(int i = 0; i < entityList.size(); i++){
+                entityList.remove(i);
+            }
 
             ui.draw(g2d);
         }

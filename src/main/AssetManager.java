@@ -1,5 +1,6 @@
 package main;
 
+import monster.Slime;
 import object.OBJ_Coin;
 import object.OBJ_Door;
 
@@ -17,5 +18,11 @@ public class AssetManager {
         gp.obj[1] = new OBJ_Door(gp);
         gp.obj[1].worldX = 7 * gp.tileSize;
         gp.obj[1].worldY = 7 * gp.tileSize;
+    }
+
+    public void setMonster(){
+        gp.monster[0] = new Slime(gp);
+        gp.monster[0].worldX = 9 * gp.tileSize;
+        gp.monster[0].worldY = 9 * gp.tileSize;
     }
 }
