@@ -15,6 +15,7 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
+    public int commandNumber = 0;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -35,6 +36,10 @@ public class UI {
         g2d.setFont(arial_30);
         g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(50F));
+
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
 
         if(gp.gameState == gp.playState){
             if(gameFinished == true){
@@ -78,6 +83,44 @@ public class UI {
             drawPauseScreen();
         }
     }
+    public void drawTitleScreen(){
+        //Tło
+        g2d.setColor(new Color(0xFF294A));
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        //Menu początkowe
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 80f));
+        String text = "Escape Coin";
+        int x = getXforCenterText(text);
+        int y = gp.tileSize*5;
+
+        //Cień
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(text, x+5, y+5);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x, y);
+
+        //Menu
+        g2d.setFont(g2d.getFont().deriveFont(40F));
+
+        text = "Graj";
+        x = getXforCenterText(text);
+        y += gp.tileSize*4;
+        g2d.drawString(text, x, y);
+        if(commandNumber == 0){
+            g2d.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "Wyjdź";
+        x = getXforCenterText(text);
+        y += gp.tileSize*2;
+        g2d.drawString(text, x, y);
+        if(commandNumber == 1){
+            g2d.drawString(">", x-gp.tileSize, y);
+        }
+    }
+
     public void drawPauseScreen(){
         g2d.setFont(g2d.getFont().deriveFont(60f));
         String text = "WSTRZYMANO GRĘ";

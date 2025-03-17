@@ -21,23 +21,52 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if(code == KeyEvent.VK_W){
-            upPressed = true;
-        }
-        if(code == KeyEvent.VK_S){
-            downPressed = true;
-        }
-        if(code == KeyEvent.VK_A){
-            leftPressed = true;
-        }
-        if(code == KeyEvent.VK_D){
-            rightPressed = true;
-        }
-        if(code == KeyEvent.VK_ESCAPE){
-            if(gp.gameState == gp.playState){
+        if(gp.gameState == gp.playState){
+            if(code == KeyEvent.VK_W){
+                upPressed = true;
+            }
+            if(code == KeyEvent.VK_S){
+                downPressed = true;
+            }
+            if(code == KeyEvent.VK_A){
+                leftPressed = true;
+            }
+            if(code == KeyEvent.VK_D){
+                rightPressed = true;
+            }
+            if(code == KeyEvent.VK_ESCAPE){
                 gp.gameState = gp.pauseState;
             }
-            else if(gp.gameState == gp.pauseState){
+        }
+
+        //Menu
+        if(gp.gameState == gp.titleState){
+            if(code == KeyEvent.VK_W){
+                gp.ui.commandNumber--;
+                if(gp.ui.commandNumber < 0){
+                    gp.ui.commandNumber = 1;
+                }
+            }
+            if(code == KeyEvent.VK_S){
+                gp.ui.commandNumber++;
+                if(gp.ui.commandNumber > 1){
+                    gp.ui.commandNumber = 0;
+                }
+            }
+            if(code == KeyEvent.VK_ENTER){
+                if(gp.ui.commandNumber == 0){
+                    gp.gameState = gp.playState;
+                    gp.playMusic(0);
+                }
+                if(gp.ui.commandNumber == 1){
+                    System.exit(0);
+                }
+            }
+        }
+
+        //Pauza
+        if(gp.gameState == gp.pauseState){
+            if(code == KeyEvent.VK_ESCAPE){
                 gp.gameState = gp.playState;
             }
         }
