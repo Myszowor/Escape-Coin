@@ -78,7 +78,7 @@ public class UI {
                 if(messageOn == true){
 
                     g2d.setFont(g2d.getFont().deriveFont(25F));
-                    g2d.drawString(message, 70, 100);
+                    g2d.drawString(message, 70, 200);
 
                     messageCounter++;
                     if(messageCounter > 90){

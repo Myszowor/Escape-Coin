@@ -4,12 +4,8 @@ import entity.Projectile;
 import main.GamePanel;
 
 public class OBJ_Fireball extends Projectile {
-
-    GamePanel gp;
-
     public OBJ_Fireball(GamePanel gp){
         super(gp);
-        this.gp = gp;
 
         name = "Fireball";
         speed = 6;
