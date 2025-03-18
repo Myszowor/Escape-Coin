@@ -2,7 +2,7 @@ package entity;
 
 import main.GamePanel;
 
-public class Projectile extends Entity {
+public abstract class Projectile extends Entity {
 
     public Projectile(GamePanel gp){
         super(gp);
