@@ -155,8 +155,14 @@ public class Player extends Entity {
                 invincibleCounter = 0;
             }
         }
+
+        //cooldown na strzelanie fireball'em
         if(shotAvailableCounter < 30){
             shotAvailableCounter++;
+        }
+
+        if(life <= 0){
+            gp.gameState = gp.gameOverState;
         }
     }
 

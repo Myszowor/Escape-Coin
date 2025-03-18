@@ -89,9 +89,8 @@ public class UI {
             }
         }
 
-        if(gp.gameState == gp.pauseState){
-            drawPlayerLife();
-            drawPauseScreen();
+        if(gp.gameState == gp.gameOverState){
+            drawGameOverScreen();
         }
     }
     public void drawTitleScreen(){
@@ -160,13 +159,23 @@ public class UI {
         }
     }
 
-    public void drawPauseScreen(){
-        g2d.setFont(g2d.getFont().deriveFont(60f));
-        String text = "WSTRZYMANO GRĘ";
-        int x = getXforCenterText(text);
-        int y = gp.screenHeight / 2;
+    public void drawGameOverScreen(){
+        g2d.setColor(new Color(0,0,0,130));
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 
-        g2d.drawString(text, x ,y);
+        int x;
+        int y;
+        String text;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100F));
+
+        text = "Zginąłeś!";
+        g2d.setColor(Color.BLACK);
+        x = getXforCenterText(text);
+        y = gp.screenHeight/2;
+        g2d.drawString(text, x+5, y+5);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x, y);
     }
 
     public int getXforCenterText(String text){

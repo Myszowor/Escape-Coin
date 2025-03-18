@@ -47,8 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
     //Stany gry
     public int gameState;
     public final int playState = 1;
-    public final int pauseState = 2;
-    public final int titleState = 3;
+    public final int titleState = 2;
+    public final int gameOverState = 3;
 
 
     public GamePanel() {
@@ -64,7 +64,6 @@ public class GamePanel extends JPanel implements Runnable {
         aManager.setMonster();
 
         playMusic(0);
-        stopMusic();
         gameState = titleState;
     }
 
@@ -128,10 +127,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-
-        if(gameState == pauseState){
-            //todo
-        }
     }
 
     public void paintComponent(Graphics g){
@@ -182,9 +177,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             //Pusta lista podmiotów
-            for(int i = 0; i < entityList.size(); i++){
-                entityList.clear();
-            }
+            entityList.clear();
 
             ui.draw(g2d);
         }
