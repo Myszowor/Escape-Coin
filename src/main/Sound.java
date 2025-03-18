@@ -12,6 +12,8 @@ public class Sound {
     public Sound() {
         soundURL[0] = getClass().getResource("../res/sound/gameSong.wav");
         soundURL[1] = getClass().getResource("../res/sound/pickupCoin.wav");
+        soundURL[2] = getClass().getResource("../res/sound/fireball.wav");
+        soundURL[3] = getClass().getResource("../res/sound/dmg.wav");
     }
 
     public void setFile(int i){

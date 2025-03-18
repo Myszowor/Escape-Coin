@@ -141,6 +141,7 @@ public class Player extends Entity {
         }
 
         if(keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30){
+            gp.playSE(2);
 
             projectile.set(worldX, worldY, direction, true);
 
@@ -167,19 +168,20 @@ public class Player extends Entity {
                     damage = 0;
                 }
                 life -= damage;
+                gp.playSE(3);
                 invincible = true;
             }
         }
     }
 
     public void damageMonster(int i, int attack){
-        if(i != 999){
+        if(i != 99){
             if(gp.monster[i].invincible == false){
                 int damage = attack - gp.monster[i].defense;
                 if(damage < 0){
                     damage = 0;
                 }
-
+                gp.playSE(3);
                 gp.monster[i].life -= damage;
                 gp.monster[i].invincible = true;
 
