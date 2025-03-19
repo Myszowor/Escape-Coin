@@ -28,5 +28,13 @@ public class AssetManager {
         gp.monster[1] = new Slime(gp);
         gp.monster[1].worldX = 14 * gp.tileSize;
         gp.monster[1].worldY = 14 * gp.tileSize;
+
+        gp.monster[2] = new Slime(gp);
+        gp.monster[2].worldX = 26 * gp.tileSize;
+        gp.monster[2].worldY = 26 * gp.tileSize;
+
+        gp.monster[3] = new Slime(gp);
+        gp.monster[3].worldX = 28 * gp.tileSize;
+        gp.monster[3].worldY = 28 * gp.tileSize;
     }
 }
