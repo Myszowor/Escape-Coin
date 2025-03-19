@@ -50,43 +50,34 @@ public class UI {
         }
 
         if(gp.gameState == gp.playState){
-            if(gameFinished == true){
+            drawPlayerLife();
 
-                String text;
-                int textLength;
-                int x;
-                int y;
+            g2d.setFont(arial_30);
+            g2d.setColor(Color.WHITE);
+            g2d.drawImage(coinImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
+            g2d.drawString("x " + gp.player.hasCoin, 70, 60);
 
-                text = "KONIEC GRY!";
-                textLength = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+            //wiadomość
+            if(messageOn == true){
 
-                x = gp.screenWidth/2 - textLength/2;
-                y = gp.screenHeight/2 - (gp.tileSize * 2);
-                g2d.drawString(text, x, y);
+                g2d.setFont(g2d.getFont().deriveFont(25F));
+                g2d.drawString(message, 70, 200);
 
-                gp.gameThread = null;
-            }
-            else{
-                drawPlayerLife();
-
-                g2d.setFont(arial_30);
-                g2d.setColor(Color.WHITE);
-                g2d.drawImage(coinImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-                g2d.drawString("x " + gp.player.hasCoin, 70, 60);
-
-                //wiadomość
-                if(messageOn == true){
-
-                    g2d.setFont(g2d.getFont().deriveFont(25F));
-                    g2d.drawString(message, 70, 200);
-
-                    messageCounter++;
-                    if(messageCounter > 90){
-                        messageCounter = 0;
-                        messageOn = false;
-                    }
+                messageCounter++;
+                if(messageCounter > 90){
+                    messageCounter = 0;
+                    messageOn = false;
                 }
             }
+        }
+
+        if(gp.gameState == gp.endGameState){
+            drawEndGameScreen();
+        }
+
+        if(gp.gameState == gp.pauseState){
+            drawPauseScreen();
+            drawPlayerLife();
         }
 
         if(gp.gameState == gp.gameOverState){
@@ -159,6 +150,25 @@ public class UI {
         }
     }
 
+    public void drawPauseScreen(){
+        g2d.setColor(new Color(0,0,0, 140));
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        int x;
+        int y;
+        String text;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100F));
+
+        text = "PAUZA";
+        g2d.setColor(Color.BLACK);
+        x = getXforCenterText(text);
+        y = gp.screenHeight/2;
+        g2d.drawString(text, x+5, y+5);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x, y);
+    }
+
     public void drawGameOverScreen(){
         g2d.setColor(new Color(0,0,0,130));
         g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
@@ -176,6 +186,29 @@ public class UI {
 
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x, y);
+    }
+
+    public void drawEndGameScreen(){
+        g2d.setColor(new Color(0,0,0,130));
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+        String text;
+        int x;
+        int y;
+
+        text = "KONIEC GRY!";
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100F));
+
+        x = getXforCenterText(text);
+        y = gp.screenHeight/2 - (gp.tileSize * 2);
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(text, x+5, y+5);
+
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x, y);
+
+        gp.gameThread = null;
     }
 
     public int getXforCenterText(String text){

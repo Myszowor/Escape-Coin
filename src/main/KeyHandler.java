@@ -37,6 +37,9 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_SPACE){
                 shotKeyPressed = true;
             }
+            if(code == KeyEvent.VK_ESCAPE){
+                gp.gameState = gp.pauseState;
+            }
         }
 
         //Menu
@@ -60,6 +63,18 @@ public class KeyHandler implements KeyListener {
                 if(gp.ui.commandNumber == 1){
                     System.exit(0);
                 }
+            }
+        }
+
+        if(gp.gameState == gp.pauseState){
+            if(code == KeyEvent.VK_ENTER){
+                gp.gameState = gp.playState;
+            }
+        }
+
+        if(gp.gameState == gp.endGameState){
+            if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
+                System.exit(0);
             }
         }
     }

@@ -214,6 +214,7 @@ public class Player extends Entity {
                         hasCoin--;
                         gp.ui.showMessage("Otworzyłeś drzwi tracąc 1 monetę!");
                         gp.ui.gameFinished = true;
+                        gp.gameState=gp.endGameState;
                         gp.stopMusic();
                     }
                     else{
