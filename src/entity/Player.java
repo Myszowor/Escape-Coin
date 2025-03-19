@@ -146,6 +146,7 @@ public class Player extends Entity {
             projectile.set(worldX, worldY, direction, true);
 
             gp.projectileList.add(projectile);
+            shotAvailableCounter = 0;
         }
 
         if(invincible == true){
